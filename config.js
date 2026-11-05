@@ -16,8 +16,8 @@
 
 window.SITE_CONFIG = {
   SITE_NAME: "316 Restock Watch",
-  SUPABASE_URL: "",
-  SUPABASE_KEY: "",
+  SUPABASE_URL: "https://gvgpkpikqjniedskifso.supabase.co",
+  SUPABASE_KEY: "sb_publishable_UOsb47W9WOFwOO757pttMA_6fQp3uON",
 
   // Towns shown in the dropdowns
   CITIES: [
