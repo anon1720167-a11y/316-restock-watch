@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>316 Restock Watch</title>
+  <meta name="description" content="Community-reported Pokémon TCG restocks and sightings around Wichita and the 316.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='7' y='3' width='18' height='26' rx='3' fill='%23f2c230' stroke='%231b2a4a' stroke-width='2'/><path d='M16 10l2 4.5 4.5.5-3.4 3 1 4.6L16 20.3 11.9 22.6l1-4.6-3.4-3 4.5-.5z' fill='%231b2a4a'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div>
+        <h1 id="site-name">316 Restock Watch</h1>
+        <p class="tagline">Pokémon card restocks &amp; sightings around Wichita, reported by locals.</p>
+      </div>
+      <button class="btn btn-primary" id="open-form">+ Report a drop</button>
+    </div>
+  </header>
+
+  <div id="demo-banner" class="banner" hidden>
+    <div class="wrap">Demo mode: showing sample data saved only in this browser. Connect Supabase in <code>config.js</code> to go live.</div>
+  </div>
+
+  <main class="wrap">
+    <section class="stats" aria-label="Summary">
+      <div class="stat"><span class="stat-num" id="stat-24h">0</span><span class="stat-label">reports in last 24h</span></div>
+      <div class="stat"><span class="stat-num" id="stat-restocks">0</span><span class="stat-label">restocks today</span></div>
+      <div class="stat"><span class="stat-num" id="stat-hot">—</span><span class="stat-label">busiest store (24h)</span></div>
+    </section>
+
+    <section class="filters" aria-label="Filters">
+      <div class="chips" role="group" aria-label="Report type">
+        <button class="chip active" data-kind="all">All</button>
+        <button class="chip" data-kind="restock">Restocks</button>
+        <button class="chip" data-kind="sighting">Sightings</button>
+        <button class="chip" data-kind="sold_out">Sold out</button>
+      </div>
+      <div class="filter-row">
+        <select id="filter-city" aria-label="Filter by town"><option value="">All towns</option></select>
+        <input id="filter-search" type="search" placeholder="Search store or product…" aria-label="Search">
+      </div>
+    </section>
+
+    <section aria-label="Reports">
+      <div class="feed-head">
+        <h2>Latest reports</h2>
+        <span class="live" id="live-status">Loading…</span>
+      </div>
+      <ul id="feed" class="feed"></ul>
+      <p id="empty" class="empty" hidden>No reports match yet. Seen something? Be the first to post it.</p>
+    </section>
+  </main>
+
+  <dialog id="report-dialog">
+    <form id="report-form" method="dialog" novalidate>
+      <h2>Report a drop</h2>
+      <fieldset class="kind-pick">
+        <legend>What did you see?</legend>
+        <label><input type="radio" name="kind" value="restock" checked> Restock (fresh stock on shelf)</label>
+        <label><input type="radio" name="kind" value="sighting"> Sighting (a few left)</label>
+        <label><input type="radio" name="kind" value="sold_out"> Sold out / empty</label>
+      </fieldset>
+
+      <label>Town
+        <select name="city" id="form-city" required></select>
+      </label>
+      <label>Store
+        <input name="store" list="store-list" maxlength="80" placeholder="e.g. Target – Maize Rd" required>
+        <datalist id="store-list"></datalist>
+      </label>
+      <label>What was there?
+        <input name="product" maxlength="120" placeholder="e.g. Prismatic Evolutions ETBs, booster bundles" required>
+      </label>
+      <label>Notes <span class="opt">(optional)</span>
+        <textarea name="notes" maxlength="300" rows="2" placeholder="Limit 2 per person, at customer service, vendor arrives Tuesdays…"></textarea>
+      </label>
+      <label>Your nickname <span class="opt">(optional)</span>
+        <input name="reporter" maxlength="30" placeholder="Anonymous">
+      </label>
+      <!-- spam trap: real people never see or fill this -->
+      <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="form-actions">
+        <button type="button" class="btn" id="cancel-form">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn">Post report</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="wrap footer">
+    <p>Reports are posted by the community and may be wrong. Please be kind to store staff.</p>
+    <p>Fan-run site. Not affiliated with Nintendo, The Pokémon Company, or any retailer.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
